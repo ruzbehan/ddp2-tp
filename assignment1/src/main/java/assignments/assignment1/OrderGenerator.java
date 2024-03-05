@@ -204,7 +204,7 @@ public class OrderGenerator {
         // Loop utama
         while (true) {
             System.out.println("--------------------------------");
-            System.out.println("Pilihan menu: ");
+            System.out.print("Pilihan menu: ");
 
             // Meminta input dari user
             int menu = input.nextInt();
