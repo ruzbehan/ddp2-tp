@@ -109,7 +109,14 @@ public class MainMenu {
 
         int jumlahOrder = 0;
 
-        while (true) {
+        // Menginisiasi array menuStrings untuk menyimpan nama makanan (menu) dalam bentuk string
+        String[] menuStrings = null;
+        ArrayList<Menu> menuList = new ArrayList<>();
+        boolean isMenuValid = false;
+
+
+        while (!isMenuValid) {
+
             System.out.print("Nama Restoran: ");
             namaRestoran = input.nextLine();
 
@@ -119,8 +126,10 @@ public class MainMenu {
                 // Jika ada nama restoran yang cocok, akan diolah
                 if (restaurant.getNama().equalsIgnoreCase(namaRestoran)) {
                     currentResto = restaurant;
+                    System.out.println("Halo");
                     break;
                 }
+
             }
 
             // Jika currentResto masih null berarti restoran tidak ditemukan, maka program akan
@@ -151,21 +160,10 @@ public class MainMenu {
                 continue;
             }
 
-            break;
-        }
-
-
-        // MEMINTA INPUT ORDER
-
-        // Menginisiasi array menuStrings untuk menyimpan nama makanan (menu) dalam bentuk string
-        String[] menuStrings = new String[jumlahOrder];
-        ArrayList<Menu> menuList = new ArrayList<>();
-        boolean isMenuValid = false;
-
-        while (!isMenuValid) {
             isMenuValid = true;
 
             // Meminta input makanan
+            menuStrings = new String[jumlahOrder];
             for (int i = 0; i < jumlahOrder; i++) {
 
                 // Mengisi makanan dari input
@@ -175,12 +173,14 @@ public class MainMenu {
             // Melakukan looping untuk memparsing menu dalam bentuk string ke objek menu
             for (String stringMenu: menuStrings) {
 
-
                 Menu currentMenu = null;
 
                 // Mengecek nama menu pada restoran apakah valid
                 for (Menu menu: currentResto.getMenu()) {
-                    if (menu.getNamaMakanan().equalsIgnoreCase(stringMenu)) {
+                    System.out.println(currentResto.getMenu().size());
+
+                    System.out.println(menu.getNamaMakanan());
+                    if (menu.getNamaMakanan().equalsIgnoreCase(stringMenu.strip())) {
                         currentMenu = menu;
                     }
                 }
@@ -419,7 +419,7 @@ public class MainMenu {
         Restaurant newRestaurant = null;
 
         int jumlahMakanan;
-        
+
         // MEMINTA INPUT MENU
 
         // Menginisiasi array menuStrings untuk menyimpan nama makanan dan harga dalam bentuk string
@@ -451,11 +451,8 @@ public class MainMenu {
                 }
             }
 
-            // Mengembalikan nama restoran yang telah difilter
-            namaRestoran = tmp;
-
             // Cek apakah nama restoran memiliki karakter lebih dari empat
-            if (namaRestoran.length() < 4) {
+            if (tmp.length() < 4) {
                 System.out.println("Nama Restoran tidak valid!\n");
                 isNamaRestoranValid = false;
                 continue;
@@ -521,8 +518,9 @@ public class MainMenu {
 
                 // Masukkan menu baru sesuai dengan urutan harga dan nama
                 boolean isAdded = false;
+
                 for (int i = 0; i < menuList.size(); i++) {
-                    if (!isAdded) { break; }
+                    if (isAdded) { break; }
 
                     // Bandingkan harga
                     if (menuList.get(i).getHarga() > newMenu.getHarga()) {
@@ -543,7 +541,6 @@ public class MainMenu {
                             menuList.add(i, newMenu);
                             isAdded = true;
                             break;
-
                         }
                     }
                 }
